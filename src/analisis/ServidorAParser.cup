@@ -1,0 +1,57 @@
+package analisis;
+import java_cup.runtime.*;
+import java.util.*;
+import acciones.*;
+
+parser code
+
+{:
+    /**Metodo al que se llama automaticamente ante algun error sintáctico.*/
+    public void syntax_error(Symbol s)
+    {
+        //Metodos.addError("sintactico", (s.right+1), s.left, "Identificador \"" +s.value + "\" no reconocido por la gramatica");
+        System.out.println("Error sintactico en la Fila " + (s.right+1) +" Columna "+s.left+ ". Identificador \"" +s.value + "\" no reconocido." );
+    }
+
+    /**Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores.*/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    { 
+        //Metodos.addError("sintactico", (s.right+1), s.left, "Identificador \"" +s.value + "\" no reconocido por la gramatica");
+        System.out.println("Error sintactico en la Fila " + (s.right+1)+ " Columna "+s.left+". Identificador \"" + s.value + "\" no reconocido."); 
+    }
+
+:}
+
+action code 
+{:
+    int nvl = 0;
+    String nombreArchivo ="";
+:} 
+
+terminal tnombre, tuse, tfun, tvar, tas, tint, tfloat, tstring, tbool, tchar;
+
+non terminal INICIO, CUERPO, CABECERA, IMPORTS, DECLARA_VAR, DECLARA_VAR2;
+
+
+
+start with INICIO; 
+
+INICIO          ::= CUERPO {: System.out.println("Fin"); :};
+
+CUERPO          ::= ELEMENTOS
+
+ELEMENTOS       ::= SESION
+
+SESION          ::= tssesion ATRIBUTOS tmayor CAMPOS tesesion;
+
+ATRIBUTOS       ::= ATRIBUTOS ATRIBUTO
+                    |ATRIBUTO 
+
+ATRIBUTO        ::= ttipo tigual tcadena
+                    |tid tigual tcadena
+                    |tpeticion tigual tcadena
+                    |tde tigual tcadena
+                    |tfecha tigual tcadena
+
+CAMPOS          ::= 
+
