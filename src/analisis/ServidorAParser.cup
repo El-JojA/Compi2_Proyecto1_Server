@@ -38,20 +38,101 @@ start with INICIO;
 
 INICIO          ::= CUERPO {: System.out.println("Fin"); :};
 
-CUERPO          ::= ELEMENTOS
+CUERPO          ::= ELEMENTOS;
 
 ELEMENTOS       ::= SESION
+                    |USUARIOS
+                    |LOGIN
+                    |SOLICITUD
+                    |MENSAJE;
 
 SESION          ::= tssesion ATRIBUTOS tmayor CAMPOS tesesion;
 
-ATRIBUTOS       ::= ATRIBUTOS ATRIBUTO
-                    |ATRIBUTO 
+ATRIBUTOS_SESION::= ATRIBUTOS_SESION ATRIBUTO_SESION
+                    |ATRIBUTO_SESION;
 
-ATRIBUTO        ::= ttipo tigual tcadena
+ATRIBUTO_SESION ::= ttipo tigual tcadena
                     |tid tigual tcadena
                     |tpeticion tigual tcadena
                     |tde tigual tcadena
-                    |tfecha tigual tcadena
+                    |tfecha tigual tcadena;
 
-CAMPOS          ::=  
+LISTA_CAMPOS    ::= LISTA_CAMPOS CAMPOS
+                    |CAMPOS;
+
+CAMPOS          ::=  tsusuario tcadcampo teusuario
+                    |tsfecha tfechacadena tefecha
+                    |tsnombre tcadcampo tenombre
+                    |tsclave tcadcampo teclave
+                    |tscontenido tcadcampo tecontenido
+                    |tsasunto tcadcampo teasunto
+                    |tsestado tcadcampo teestado
+                    |tsemisor tcadcampo teemisor
+                    |DESTINATARIOS
+                    |ARCHIVOS;
+
+DESTINATARIOS   ::= tsdestinatarios LISTA_DESTINATARIOS tedestinatarios;
+
+LISTA_DESTINATARIOS ::= LISTA_DESTINATARIOS DESTINATARIO
+                        |DESTINATARIO;
+
+                                    /** Verifica la validez del email en el sintactico para poder manejar mas facil el dominio del servidor */
+DESTINATARIO    ::= tsdestinatario tcadcampo tedestinatario;
+
+ARCHIVOS        ::= tsarchivos LISTA_ARCHIVOS tearchivos;
+
+                    /** La lista puede venir vacia asi que lo dejo con un epsilon. */
+LISTA_ARCHIVOS  ::= LISTA_ARCHIVOS ARCHIVO
+                    |;
+
+ARCHIVO         ::= tsarchivo LISTA_ATR_ARCHIVO tmayor LISTA_CELDAS tearchivo;
+
+LISTA_ATR_ARCHIVO::= LISTA_ATR_ARCHIVO ATRIBUTO_ARCHIVO
+                    |ATRIBUTO_ARCHIVO;
+
+ATRIBUTO_ARCHIVO::= ttipo tigual tcadena
+                    |ttama tigual tcadena;
+
+LISTA_CELDAS    ::= LISTA_CELDAS CELDA
+                    |CELDA;
+
+CELDA           ::= tscelda LISTA_ATR_CELDA tmayor CONTENIDO_CELDA tecelda;
+
+LISTA_ATR_CELDA ::= LISTA_ATR_CELDA ATRIBUTOS_CELDA
+                    |ATRIBUTOS_CELDA;
+
+ATRIBUTOS_CELDA ::= tfila tigual tcadena
+                    |tcolumna tigual tcadena
+                    |ttipo tigual tcadena
+                    |tcolor tigual tcadena
+                    |tformula tigual tcadena;
+
+
+CONTENIDO_CELDA ::= tcadena
+                    |FORMULA
+                    |;
+
+FORMULA         ::= tsformula INSTRUCCIONES teformula;
+
+INSTRUCCIONES   :: tinstrucciones;
+
+EMISOR          ::= tsemisor tmayor CAMPOS tmenor teemisor;
+
+USUARIOS        ::= tsusuarios LISTA_USUARIOS teusuarios;
+
+LISTA_USUARIOS  ::= LISTA_USUARIOS USUARIO
+                    |USUARIO;
+
+USUARIO         ::= tsusuario tmayor CAMPOS tmenor teusuario;
+
+LOGIN           ::= tslogin CAMPOS telogin;
+
+MENSAJE         ::= tsmensaje CAMPOS temensaje;
+
+SOLICITUD       ::= tssolicitudamistad CAMPOS_SOLICITUD tesolicitudamistad;
+
+CAMPOS_SOLICITUD::= tsrespuesta tcadcampo terespuesta
+                    |tsdestinatario tcadcampo tedestinatario
+                    |EMISOR;
+
 
