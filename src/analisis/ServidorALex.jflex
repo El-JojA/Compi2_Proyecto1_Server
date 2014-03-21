@@ -16,17 +16,12 @@ import java.util.*;
 
 
 digito      = [0-9]
-entero      = {digito}+
-decimal     = {entero} "." {entero}
-letra       = [a-zA-ZñÑ]+
 cadena      = [\"] [^\"\n]* [\"]
 cadcampo    = ">" [^<]* "<"
-iden        = {letra}({letra}|{digito}|"_")*
-emailcampo  = ">"  {iden} "@" {iden} ".com" "<"
 fecha       = {digito}{digito} "-" {digito}{digito} "-" {digito}{digito}{digito}{digito}
 hora        = {digito}{digito} ":" {digito}{digito} ":" {digito}{digito}
 fechacadena = ">" {fecha} "," {hora} "<"
-booleano    = ("true"|"false")
+
 
 %state A
 
@@ -57,14 +52,14 @@ booleano    = ("true"|"false")
 "<asunto"       {
                  return new Symbol(SymServidorA.tsasunto, yychar, yyline ,new String(yytext()));}
 "/asunto>"      {
-                 return new Symbol(SymServidorA.teasuno, yychar, yyline ,new String(yytext()));}
+                 return new Symbol(SymServidorA.teasunto, yychar, yyline ,new String(yytext()));}
 "<contenido"    {
                  return new Symbol(SymServidorA.tscontenido, yychar, yyline ,new String(yytext()));}
 "/contenido>"   {
                  return new Symbol(SymServidorA.tecontenido, yychar, yyline ,new String(yytext()));}
-"<destinatarios>"{
+"<destinatarios>" {
                  return new Symbol(SymServidorA.tsdestinatarios, yychar, yyline ,new String(yytext()));}
-"</destinatarios>"{
+"</destinatarios>" {
                  return new Symbol(SymServidorA.tedestinatarios, yychar, yyline ,new String(yytext()));}
 "<archivos>"    {
                  return new Symbol(SymServidorA.tsarchivos, yychar, yyline ,new String(yytext()));}
@@ -72,7 +67,7 @@ booleano    = ("true"|"false")
                  return new Symbol(SymServidorA.tearchivos, yychar, yyline ,new String(yytext()));}
 "<destinatario" {
                  return new Symbol(SymServidorA.tsdestinatario, yychar, yyline ,new String(yytext()));}
-"/destinatario>"{
+"/destinatario>" {
                  return new Symbol(SymServidorA.tedestinatario, yychar, yyline ,new String(yytext()));}
 "<archivo"      {
                  return new Symbol(SymServidorA.tsarchivo, yychar, yyline ,new String(yytext()));}
@@ -106,7 +101,7 @@ booleano    = ("true"|"false")
                  return new Symbol(SymServidorA.tsemisor, yychar, yyline ,new String(yytext()));}
 "/emisor>"      {
                  return new Symbol(SymServidorA.teemisor, yychar, yyline ,new String(yytext()));}
-"<solicitud_amistad>"{
+"<solicitud_amistad>" {
                  return new Symbol(SymServidorA.tssolicitudamistad, yychar, yyline ,new String(yytext()));}
 "</solicitud_amistad>"      {
                  return new Symbol(SymServidorA.tesolicitudamistad, yychar, yyline ,new String(yytext()));}
@@ -145,16 +140,11 @@ booleano    = ("true"|"false")
  
 "="             {
                  return new Symbol(SymServidorA.tigual, yychar, yyline ,new String(yytext()));}
-"@"             {
-                 return new Symbol(SymServidorA.tarroba, yychar, yyline ,new String(yytext()));}
-
-".com"             {
-                 return new Symbol(SymServidorA.tpcom, yychar, yyline ,new String(yytext()));}
 
 
 /* Operadores Aritméticos */
 
-
+/**
 "+"             {
                  return new Symbol(SymServidorA.tmas, yychar, yyline ,new String(yytext()));}
 "-"             {
@@ -165,7 +155,7 @@ booleano    = ("true"|"false")
                  return new Symbol(SymServidorA.tdividir, yychar, yyline ,new String(yytext()));}
 "&"             {
                  return new Symbol(SymServidorA.tconcat, yychar, yyline ,new String(yytext()));}
-
+*/
 
 /* Operadores Comparadoras */
 
@@ -181,30 +171,25 @@ booleano    = ("true"|"false")
 
 /* Operadores Lógicos */
 
+/**
+
 "||"    {
         return new Symbol(SymServidorA.tor, yychar,yyline,new String(yytext())); }
 "&&"    {
         return new Symbol(SymServidorA.tand, yychar,yyline,new String(yytext())); }
 "!"    {
         return new Symbol(SymServidorA.tno, yychar,yyline,new String(yytext())); }
-
+*/
 
 /* Literales */
 
-    {iden}          {
-                    return new Symbol(SymServidorA.tiden, yychar,yyline,new String(yytext()));}
-    {cadena}        {
+     {cadena}        {
                     return new Symbol(SymServidorA.tcadena, yychar,yyline,new String(yytext().substring(1, yytext().length()-1)));}
-    {emailcampo}    {
-                    return new Symbol(SymServidorA.temailcampo, yychar,yyline,new String(yytext()));}                
     {fechacadena}   {
                     return new Symbol(SymServidorA.tfechacadena, yychar,yyline,new String(yytext()));}
     {cadcampo}      {
                     return new Symbol(SymServidorA.tcadcampo, yychar,yyline,new String(yytext().substring(1, yytext().length()-1)));}                
-    {entero}        {
-                    return new Symbol(SymServidorA.tentero, yychar,yyline,new String(yytext()));}
-    {decimal}      {
-                    return new Symbol(SymServidorA.tdecimal, yychar,yyline,new String(yytext()));}
+
                
 
 /* Caracteres ignorados */ 

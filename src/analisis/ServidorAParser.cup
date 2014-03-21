@@ -28,9 +28,21 @@ action code
     String nombreArchivo ="";
 :} 
 
-terminal tnombre, tuse, tfun, tvar, tas, tint, tfloat, tstring, tbool, tchar;
+terminal tssesion, tesesion, tsusuario, teusuario, tsfecha, tefecha, tsnombre, tenombre;
+terminal tsclave, teclave, tsasunto, teasunto, tscontenido, tecontenido, tsdestinatarios;
+terminal tedestinatarios, tsarchivos, tearchivos, tsdestinatario, tedestinatario, tsarchivo;
+terminal tearchivo, tscelda, tecelda, tsformula, teformula, tsusuarios, teusuarios, tslogin;
+terminal telogin, tsestado, teestado, tsrespuesta, terespuesta, tsemisor, teemisor;
+terminal tssolicitudamistad, tesolicitudamistad, tsmensaje, temensaje, ttipo, ttama;
+terminal tid, tpeticion, tde, tfecha, tfila, tcolumna, tcolor, tformula, tinstrucciones;
+terminal tigual,tmenor, tmayor, tcadena, tfechacadena, tcadcampo;
 
-non terminal INICIO, CUERPO, CABECERA, IMPORTS, DECLARA_VAR, DECLARA_VAR2;
+non terminal INICIO, CUERPO, ELEMENTOS,SESION, LISTA_ATR_SESION, ATRIBUTO_SESION;
+non terminal LISTA_CAMPOS, CAMPOS, DESTINATARIOS, LISTA_DESTINATARIOS, DESTINATARIO;
+non terminal ARCHIVOS, LISTA_ARCHIVOS, ARCHIVO, LISTA_ATR_ARCHIVO, ATRIBUTO_ARCHIVO;
+non terminal LISTA_CELDAS, CELDA, LISTA_ATR_CELDA, ATRIBUTOS_CELDA, CONTENIDO_CELDA;
+non terminal FORMULA, INSTRUCCIONES, USUARIOS, LISTA_USUARIOS, USUARIO, LOGIN;
+non terminal EMISOR, CAMPOS_SOLICITUD, MENSAJE, SOLICITUD;
 
 
 
@@ -46,9 +58,9 @@ ELEMENTOS       ::= SESION
                     |SOLICITUD
                     |MENSAJE;
 
-SESION          ::= tssesion ATRIBUTOS tmayor CAMPOS tesesion;
+SESION          ::= tssesion LISTA_ATR_SESION tmayor LISTA_CAMPOS tesesion;
 
-ATRIBUTOS_SESION::= ATRIBUTOS_SESION ATRIBUTO_SESION
+LISTA_ATR_SESION::= LISTA_ATR_SESION ATRIBUTO_SESION
                     |ATRIBUTO_SESION;
 
 ATRIBUTO_SESION ::= ttipo tigual tcadena
@@ -114,20 +126,20 @@ CONTENIDO_CELDA ::= tcadena
 
 FORMULA         ::= tsformula INSTRUCCIONES teformula;
 
-INSTRUCCIONES   :: tinstrucciones;
+INSTRUCCIONES   ::= tinstrucciones;
 
-EMISOR          ::= tsemisor tmayor CAMPOS tmenor teemisor;
+EMISOR          ::= tsemisor tmayor LISTA_CAMPOS tmenor teemisor;
 
 USUARIOS        ::= tsusuarios LISTA_USUARIOS teusuarios;
 
 LISTA_USUARIOS  ::= LISTA_USUARIOS USUARIO
                     |USUARIO;
 
-USUARIO         ::= tsusuario tmayor CAMPOS tmenor teusuario;
+USUARIO         ::= tsusuario tmayor LISTA_CAMPOS tmenor teusuario;
 
-LOGIN           ::= tslogin CAMPOS telogin;
+LOGIN           ::= tslogin LISTA_CAMPOS telogin;
 
-MENSAJE         ::= tsmensaje CAMPOS temensaje;
+MENSAJE         ::= tsmensaje LISTA_CAMPOS temensaje;
 
 SOLICITUD       ::= tssolicitudamistad CAMPOS_SOLICITUD tesolicitudamistad;
 
