@@ -53,5 +53,5 @@ ATRIBUTO        ::= ttipo tigual tcadena
                     |tde tigual tcadena
                     |tfecha tigual tcadena
 
-CAMPOS          ::= 
+CAMPOS          ::=  
 
