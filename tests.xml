@@ -1,0 +1,114 @@
+
+
+<sesion id="correo" tipo="registro"> 
+	<Usuario> Usuario@servidorA.com </usuario>
+	<nombre> nombres </nombres> 
+	<fecha> fecha, hora </fecha> 
+	<clave> clave <clave> 
+</sesion>
+
+<sesion id="correo" tipo="registro"> 
+	<Usuario> Usuario@servidorA.com </usuario>
+	<nombre> nombres </nombre> 
+	<fecha>12-12-2014,12:12:12</fecha> 
+	<clave> clave </clave> 
+</sesion>
+
+
+
+
+<correos usuario="usuario@servidorA.com"> 
+	<correo> 
+		<asunto> asunto </asunto> 
+		<fecha>12-12-2014,12:12:12</fecha> 
+		<de> emisor </de> 
+		<nombre> nombre </nombre> 
+		<contenido> contenido </contenido> 
+		<archivos> 
+			<archivo tipo="PG" tama="100x100"> 
+				<celda fila="1" columna="1" color="azul" > 
+				</celda> 
+			</archivo> 
+		</archivos> 
+	</correo>
+	
+	<correo> 
+		<asunto> asunto </asunto> 
+		<fecha> 12-12-2014,12:12:12 </fecha> 
+		<de> emisor </de> 
+		<nombre> nombre </nombre> 
+		<contenido> contenido </contenido> 
+		<archivos> 
+		</archivos> 
+	</correo>
+</correos>
+
+
+<mensaje> 
+	<emisor> usuario@servidorA.com </emisor> 
+	<nombre> nombre </nombre> 
+	<destino> usuario@servidorA.com </destino> 
+	<contenido> Hola! </contenido> 
+	<fecha>12-12-2014,12:12:12 </fecha> 
+</mensaje>
+
+
+<solicitudes> 
+	<solicitud> 
+		<emisor> usuario@servidorA.com </emisor> 
+		<nombre> nombre </nombre> 
+	</solicitud>
+	<solicitud> 
+		<emisor> usuario@servidorA.com </emisor> 
+		<nombre> nombre </nombre> 
+	</solicitud> 
+</solicitudes>
+
+
+<solicitud_amistad> 
+	<respuesta> No </respuesta> 
+	<destinatario> usuario@servidorA.com </destinatario> 
+	<emisor> 
+		<usuario> usuario@servidorA.com </usuario> 
+		<nombre> nombre </nombre> 
+	</emisor> 
+</solicitud_amistad>
+
+<solicitud_amistad> 
+	<destinatario> usuario@servidorA.com </destinatario> 
+	<emisor> 
+		<usuario> usuario@servidorA.com </usuario> 
+		<nombre> nombre </nombre> 
+	</emisor> 
+</solicitud_amistad>
+
+<sesion id=”correo” peticion=”correo” de=”emisor” fecha=”fecha, hora”> 
+<usuario> Usuario@servidorA.com </usuario> 
+</sesion>
+
+<sesion id="correo" peticion="correo" de="emisor" fecha="12-12-2014,12:12:12"> 
+<usuario> Usuario@servidorA.com </usuario> 
+</sesion>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

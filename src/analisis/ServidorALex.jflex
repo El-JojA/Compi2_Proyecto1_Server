@@ -15,12 +15,16 @@ import java.util.*;
 %ignorecase
 
 
+/**
 digito      = [0-9]
+*/
 cadena      = [\"] [^\"\n]* [\"]
-cadcampo    = ">" [^<]* "<"
+cadcampo    = ">" [^<]* 
+/**
 fecha       = {digito}{digito} "-" {digito}{digito} "-" {digito}{digito}{digito}{digito}
 hora        = {digito}{digito} ":" {digito}{digito} ":" {digito}{digito}
-fechacadena = ">" {fecha} "," {hora} "<"
+*/
+fechacadena = ">" [^<]+ "," [^<]+
 
 
 %state A
@@ -35,27 +39,27 @@ fechacadena = ">" {fecha} "," {hora} "<"
                  return new Symbol(SymServidorA.tesesion, yychar, yyline ,new String(yytext()));}
 "<usuario"      {
                  return new Symbol(SymServidorA.tsusuario, yychar, yyline ,new String(yytext()));}
-"/usuario>"     {
+"</usuario>"     {
                  return new Symbol(SymServidorA.teusuario, yychar, yyline ,new String(yytext()));}
 "<fecha"        {
                  return new Symbol(SymServidorA.tsfecha, yychar, yyline ,new String(yytext()));}
-"/fecha>"       {
+"</fecha>"       {
                  return new Symbol(SymServidorA.tefecha, yychar, yyline ,new String(yytext()));}
 "<nombre"       {
                  return new Symbol(SymServidorA.tsnombre, yychar, yyline ,new String(yytext()));}
-"/nombre>"      {
+"</nombre>"      {
                  return new Symbol(SymServidorA.tenombre, yychar, yyline ,new String(yytext()));}
 "<clave"        {
                  return new Symbol(SymServidorA.tsclave, yychar, yyline ,new String(yytext()));}
-"/clave>"       {
+"</clave>"       {
                  return new Symbol(SymServidorA.teclave, yychar, yyline ,new String(yytext()));}
 "<asunto"       {
                  return new Symbol(SymServidorA.tsasunto, yychar, yyline ,new String(yytext()));}
-"/asunto>"      {
+"</asunto>"      {
                  return new Symbol(SymServidorA.teasunto, yychar, yyline ,new String(yytext()));}
 "<contenido"    {
                  return new Symbol(SymServidorA.tscontenido, yychar, yyline ,new String(yytext()));}
-"/contenido>"   {
+"</contenido>"   {
                  return new Symbol(SymServidorA.tecontenido, yychar, yyline ,new String(yytext()));}
 "<destinatarios>" {
                  return new Symbol(SymServidorA.tsdestinatarios, yychar, yyline ,new String(yytext()));}
@@ -67,7 +71,7 @@ fechacadena = ">" {fecha} "," {hora} "<"
                  return new Symbol(SymServidorA.tearchivos, yychar, yyline ,new String(yytext()));}
 "<destinatario" {
                  return new Symbol(SymServidorA.tsdestinatario, yychar, yyline ,new String(yytext()));}
-"/destinatario>" {
+"</destinatario>" {
                  return new Symbol(SymServidorA.tedestinatario, yychar, yyline ,new String(yytext()));}
 "<archivo"      {
                  return new Symbol(SymServidorA.tsarchivo, yychar, yyline ,new String(yytext()));}
@@ -91,17 +95,17 @@ fechacadena = ">" {fecha} "," {hora} "<"
                  return new Symbol(SymServidorA.telogin, yychar, yyline ,new String(yytext()));}
 "<estado"       {
                  return new Symbol(SymServidorA.tsestado, yychar, yyline ,new String(yytext()));}
-"/estado>"      {
+"</estado>"      {
                  return new Symbol(SymServidorA.teestado, yychar, yyline ,new String(yytext()));}
 "<respuesta"    {
                  return new Symbol(SymServidorA.tsrespuesta, yychar, yyline ,new String(yytext()));}
-"/respuesta>"   {
+"</respuesta>"   {
                  return new Symbol(SymServidorA.terespuesta, yychar, yyline ,new String(yytext()));}
 "<emisor"       {
                  return new Symbol(SymServidorA.tsemisor, yychar, yyline ,new String(yytext()));}
-"/emisor>"      {
+"</emisor>"      {
                  return new Symbol(SymServidorA.teemisor, yychar, yyline ,new String(yytext()));}
-"<solicitud_amistad>" {
+"<solicitud_amistad" {
                  return new Symbol(SymServidorA.tssolicitudamistad, yychar, yyline ,new String(yytext()));}
 "</solicitud_amistad>"      {
                  return new Symbol(SymServidorA.tesolicitudamistad, yychar, yyline ,new String(yytext()));}
@@ -109,6 +113,30 @@ fechacadena = ">" {fecha} "," {hora} "<"
                  return new Symbol(SymServidorA.tsmensaje, yychar, yyline ,new String(yytext()));}
 "</mensaje>"    {
                  return new Symbol(SymServidorA.temensaje, yychar, yyline ,new String(yytext()));}
+"<correo>"      {
+                 return new Symbol(SymServidorA.tscorreo, yychar, yyline ,new String(yytext()));}
+"</correo>"     {
+                 return new Symbol(SymServidorA.tecorreo, yychar, yyline ,new String(yytext()));}
+"<correos"     {
+                 return new Symbol(SymServidorA.tscorreos, yychar, yyline ,new String(yytext()));}
+"</correos>"    {
+                 return new Symbol(SymServidorA.tecorreos, yychar, yyline ,new String(yytext()));}
+"<de"           {
+                 return new Symbol(SymServidorA.tsde, yychar, yyline ,new String(yytext()));}
+"</de>"         {
+                 return new Symbol(SymServidorA.tede, yychar, yyline ,new String(yytext()));}
+"<destino"      {
+                 return new Symbol(SymServidorA.tsdestino, yychar, yyline ,new String(yytext()));}
+"</destino>"    {
+                return new Symbol(SymServidorA.tedestino, yychar, yyline ,new String(yytext()));}
+"<solicitudes"  {
+                 return new Symbol(SymServidorA.tssolicitudes, yychar, yyline ,new String(yytext()));}
+"</solicitudes>" {
+                return new Symbol(SymServidorA.tesolicitudes, yychar, yyline ,new String(yytext()));}
+"<solicitud"    {
+                 return new Symbol(SymServidorA.tssolicitud, yychar, yyline ,new String(yytext()));}
+"</solicitud>"  {
+                return new Symbol(SymServidorA.tesolicitud, yychar, yyline ,new String(yytext()));}
 
 
 
@@ -134,6 +162,8 @@ fechacadena = ">" {fecha} "," {hora} "<"
                  return new Symbol(SymServidorA.tformula, yychar, yyline ,new String(yytext()));}
 "instrucciones" {
                  return new Symbol(SymServidorA.tinstrucciones, yychar, yyline ,new String(yytext()));}
+"usuario"       {
+                 return new Symbol(SymServidorA.tusuario, yychar, yyline ,new String(yytext()));}
 
 
 
@@ -159,11 +189,12 @@ fechacadena = ">" {fecha} "," {hora} "<"
 
 /* Operadores Comparadoras */
 
+/**
 "<"             {
                  return new Symbol(SymServidorA.tmenor, yychar, yyline,new String(yytext()));}
 ">"             {
                  return new Symbol(SymServidorA.tmayor, yychar, yyline,new String(yytext()));}
-
+*/
 
 
 /* Operadores Comunes */ 
