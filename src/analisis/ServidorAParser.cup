@@ -33,19 +33,35 @@ terminal tedestinatarios, tsarchivos, tearchivos, tsdestinatario, tedestinatario
 terminal tearchivo, tscelda, tecelda, tsformula, teformula, tsusuarios, teusuarios, tslogin;
 terminal telogin, tsestado, teestado, tsrespuesta, terespuesta, tsemisor, teemisor;
 terminal tssolicitudamistad, tesolicitudamistad, tsmensaje, temensaje, ttipo, ttama;
-terminal tid, tpeticion, tde, tfecha, tfila, tcolumna, tcolor, tformula, tinstrucciones;
-terminal tigual,tmenor, tcadcampo, tcadena, tfechacadena;
+terminal tid, tpeticion, tde, tfecha, tfila, tcolumna, tcolor, tformula;
+terminal tigual,tcadcampo, tcadena, tfechacadena;
 terminal tscorreos, tecorreos, tscorreo, tecorreo, tsde, tede, tusuario, tsdestino, tedestino;
 terminal tssolicitudes, tesolicitudes,tssolicitud, tesolicitud;
+terminal tamperson, toper, tpa, tpc, tbegin, tend, tpyc, tdospuntos, tcoma,tinteger; 
+terminal tfloat, tchar, tboolean, tstring, tmas, tmenos, tpor, tdividir, tpot, tmod;
+terminal tentero, tdecimal, tcaracter, ttrue , tfalse, tif, tla, tlc, telse;
+terminal tor, tand, tno, tmenor, tmayor , tmenorigual, tmayorigual, tigualigual; 
+terminal tdiferente, tfor, tto, tnext, twhile, tiden, treturn;
 
 non terminal INICIO, CUERPO, ELEMENTOS,SESION, LISTA_ATR_SESION, ATRIBUTO_SESION;
-non terminal LISTA_CAMPOS, CAMPOS, DESTINATARIOS, LISTA_DESTINATARIOS, DESTINATARIO;
+non terminal LISTA_CAMPOS, CAMPOS, DESTINATARIOS;
 non terminal ARCHIVOS, LISTA_ARCHIVOS, ARCHIVO, LISTA_ATR_ARCHIVO, ATRIBUTO_ARCHIVO;
 non terminal LISTA_CELDAS, CELDA, LISTA_ATR_CELDA, ATRIBUTOS_CELDA, CONTENIDO_CELDA;
 non terminal FORMULA, INSTRUCCIONES, USUARIOS, LISTA_USUARIOS, USUARIO, LOGIN;
 non terminal EMISOR, MENSAJE, SOLICITUD_AMISTAD, CORREOS, LISTA_CORREOS, CORREO;
-non terminal SOLICITUDES, LISTA_SOLICITUDES, SOLICITUD;
+non terminal SOLICITUDES, LISTA_SOLICITUDES, SOLICITUD, LISTA_VARS, TIPO_VAR;
+non terminal OPERACION, INSTRUCCION, DECLARA_VAR;
+non terminal ASIGNA_VAR, REF_CELDA , EXPRESION, EXPR_PART, EXPR ,NUM,IF,ELSE;
+non terminal CONDICIONES,CONDICION,OP_COMPARADOR,FOR,WHILE;
 
+precedence left tor;
+precedence left tand;
+precedence left tno, tigualigual;
+precedence left tmenor, tmenorigual, tmayor, tmayorigual;
+
+precedence left tmas, tmenos;
+precedence left tpor, tdividir, tmod;
+precedence left tpot;
 
 
 start with INICIO; 
@@ -93,13 +109,16 @@ CAMPOS          ::=  tsusuario tcadcampo teusuario
                     |ARCHIVOS
                     |EMISOR;
 
-DESTINATARIOS   ::= tsdestinatarios LISTA_DESTINATARIOS tedestinatarios;
+DESTINATARIOS   ::= tsdestinatarios tcadcampo LISTA_CAMPOS tedestinatarios;
 
+/**
 LISTA_DESTINATARIOS ::= LISTA_DESTINATARIOS DESTINATARIO
                         |DESTINATARIO;
-
+*/
                                     /** Verifica la validez del email en el sintactico para poder manejar mas facil el dominio del servidor */
+/**
 DESTINATARIO    ::= tsdestinatario tcadcampo tedestinatario;
+*/
 
 ARCHIVOS        ::= tsarchivos LISTA_ARCHIVOS tearchivos;
 
@@ -134,9 +153,7 @@ CONTENIDO_CELDA ::= tcadena
                     |FORMULA
                     |;
 
-FORMULA         ::= tsformula INSTRUCCIONES teformula;
-
-INSTRUCCIONES   ::= tinstrucciones;
+FORMULA         ::= tsformula OPERACION teformula;
 
 EMISOR          ::= tsemisor tcadcampo LISTA_CAMPOS teemisor;
 
@@ -173,8 +190,79 @@ LISTA_SOLICITUDES ::= LISTA_SOLICITUDES SOLICITUD
 
 SOLICITUD       ::= tssolicitud tcadcampo LISTA_CAMPOS tesolicitud;
 
+OPERACION       ::= tamperson toper tigual tpa tbegin tla INSTRUCCIONES treturn EXPRESION tlc tend tpc tpyc;
+
+INSTRUCCIONES   ::= INSTRUCCIONES INSTRUCCION
+                    |INSTRUCCION;
+
+INSTRUCCION     ::= DECLARA_VAR 
+                    |ASIGNA_VAR
+                    |IF
+                    |FOR
+                    |WHILE;
+
+DECLARA_VAR     ::= LISTA_VARS tdospuntos TIPO_VAR;
+
+LISTA_VARS      ::= LISTA_VARS tcoma tiden
+                    |tiden;
+
+TIPO_VAR        ::= tinteger
+                    |tfloat
+                    |tchar
+                    |tboolean
+                    |tstring;
+
+ASIGNA_VAR      ::= tiden tigual EXPRESION
+                    |REF_CELDA tigual EXPRESION;
+
+REF_CELDA       ::= tamperson tpa EXPRESION tcoma EXPRESION tpc;
+
+EXPRESION       ::= EXPR_PART;
+
+EXPR_PART       ::= EXPR;
+
+EXPR            ::= EXPR:e1 tmas EXPR:e2  
+                    |EXPR:e1 tmenos EXPR:e2  
+                    |EXPR:e1 tpor EXPR:e2  
+                    |EXPR:e1 tdividir EXPR:e2 
+                    |EXPR:e1 tpot EXPR:e2
+                    |EXPR:e1 tmod EXPR:e2
+                    |NUM:n   
+                    |tpa EXPR:e tpc;
+
+NUM             ::= tentero:e 
+                    |tdecimal:e
+                    |tcadena:e 
+                    |tcaracter:e
+                    |ttrue:e
+                    |tfalse:e
+                    |tiden:e
+                    |REF_CELDA; 
+
+IF              ::= tif tpa CONDICIONES tpc tla INSTRUCCIONES tlc ELSE;
+
+ELSE            ::= telse tla INSTRUCCIONES:l tlc {: RESULT = l; :}
+                    |{: RESULT = null; :};
+
+CONDICIONES     ::= CONDICIONES:e1 tor CONDICIONES:e2 
+                    |CONDICIONES:e1 tand CONDICIONES:e2 
+                    |tno tpa CONDICIONES:e tpc
+                    |tpa CONDICIONES:e tpc 
+                    |CONDICION:e ;
+
+CONDICION       ::= EXPRESION:val1 OP_COMPARADOR:op EXPRESION:val2 ;
 
 
+OP_COMPARADOR   ::= tmenor          {: RESULT = new String ("<"); :}
+                    |tmayor         {: RESULT = new String (">"); :}
+                    |tmenorigual    {: RESULT = new String ("<="); :}
+                    |tmayorigual    {: RESULT = new String (">="); :}
+                    |tigualigual    {: RESULT = new String ("=="); :}
+                    |tdiferente     {: RESULT = new String ("<>"); :};
+
+FOR             ::= tfor tiden tigual EXPRESION tto EXPRESION tnext tla INSTRUCCIONES tlc;
+
+WHILE           ::= twhile tpa CONDICIONES tpc tla INSTRUCCIONES tlc ;
 
 
 

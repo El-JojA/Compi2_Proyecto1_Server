@@ -23,4 +23,6 @@ public class Compi2_Poryecto1_Server {
         guiPrueba.setVisible(true);
     }
     
+    
+    
 }

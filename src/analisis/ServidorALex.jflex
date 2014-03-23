@@ -15,11 +15,13 @@ import java.util.*;
 %ignorecase
 
 
-/**
 digito      = [0-9]
-*/
+entero      = {digito}+
+decimal     = {entero} "." {entero}
+caracter = [\'] [a-zA-ZñÑ] [\']
 cadena      = [\"] [^\"\n]* [\"]
 cadcampo    = ">" [^<]* 
+
 /**
 fecha       = {digito}{digito} "-" {digito}{digito} "-" {digito}{digito}{digito}{digito}
 hora        = {digito}{digito} ":" {digito}{digito} ":" {digito}{digito}
@@ -61,7 +63,7 @@ fechacadena = ">" [^<]+ "," [^<]+
                  return new Symbol(SymServidorA.tscontenido, yychar, yyline ,new String(yytext()));}
 "</contenido>"   {
                  return new Symbol(SymServidorA.tecontenido, yychar, yyline ,new String(yytext()));}
-"<destinatarios>" {
+"<destinatarios" {
                  return new Symbol(SymServidorA.tsdestinatarios, yychar, yyline ,new String(yytext()));}
 "</destinatarios>" {
                  return new Symbol(SymServidorA.tedestinatarios, yychar, yyline ,new String(yytext()));}
@@ -139,7 +141,6 @@ fechacadena = ">" [^<]+ "," [^<]+
                 return new Symbol(SymServidorA.tesolicitud, yychar, yyline ,new String(yytext()));}
 
 
-
 "tipo"          { 
                  return new Symbol(SymServidorA.ttipo, yychar, yyline ,new String(yytext()));}
 "tama"          { 
@@ -160,8 +161,6 @@ fechacadena = ">" [^<]+ "," [^<]+
                  return new Symbol(SymServidorA.tcolor, yychar, yyline ,new String(yytext()));}
 "formula"       {
                  return new Symbol(SymServidorA.tformula, yychar, yyline ,new String(yytext()));}
-"instrucciones" {
-                 return new Symbol(SymServidorA.tinstrucciones, yychar, yyline ,new String(yytext()));}
 "usuario"       {
                  return new Symbol(SymServidorA.tusuario, yychar, yyline ,new String(yytext()));}
 
@@ -170,11 +169,66 @@ fechacadena = ">" [^<]+ "," [^<]+
  
 "="             {
                  return new Symbol(SymServidorA.tigual, yychar, yyline ,new String(yytext()));}
+"&"             {
+                 return new Symbol(SymServidorA.tamperson, yychar, yyline ,new String(yytext()));}
+"("             {
+                 return new Symbol(SymServidorA.tpa, yychar, yyline ,new String(yytext()));}
+")"             {
+                 return new Symbol(SymServidorA.tpc, yychar, yyline ,new String(yytext()));}
+"{"             {
+                 return new Symbol(SymServidorA.tla, yychar, yyline ,new String(yytext()));}
+"}"             {
+                 return new Symbol(SymServidorA.tlc, yychar, yyline ,new String(yytext()));}
+"oper"          {
+                 return new Symbol(SymServidorA.toper, yychar, yyline ,new String(yytext()));}
+";"             {
+                 return new Symbol(SymServidorA.tpyc, yychar, yyline ,new String(yytext()));}
+"return"        {
+                 return new Symbol(SymServidorA.treturn, yychar, yyline ,new String(yytext()));}
+"end"           {
+                 return new Symbol(SymServidorA.tend, yychar, yyline ,new String(yytext()));}
+"begin"         {
+                 return new Symbol(SymServidorA.tbegin, yychar, yyline ,new String(yytext()));}
+","             {
+                 return new Symbol(SymServidorA.tcoma, yychar, yyline ,new String(yytext()));}
+"si"            {
+                 return new Symbol(SymServidorA.tif, yychar, yyline ,new String(yytext()));}
+"else"          {
+                 return new Symbol(SymServidorA.telse, yychar, yyline ,new String(yytext()));}
+"for"           {
+                 return new Symbol(SymServidorA.tfor, yychar, yyline ,new String(yytext()));}
+"while"         {
+                 return new Symbol(SymServidorA.twhile, yychar, yyline ,new String(yytext()));}
+"to"            {
+                 return new Symbol(SymServidorA.tto, yychar, yyline ,new String(yytext()));}
+"next"          {
+                 return new Symbol(SymServidorA.tnext, yychar, yyline ,new String(yytext()));}
+
+
+
+
+
 
 
 /* Operadores Aritméticos */
 
-/**
+"entero"        {
+                 return new Symbol(SymServidorA.tinteger, yychar, yyline ,new String(yytext()));}
+"float"         {
+                 return new Symbol(SymServidorA.tfloat, yychar, yyline ,new String(yytext()));}
+"char"          {
+                 return new Symbol(SymServidorA.tchar, yychar, yyline ,new String(yytext()));}
+"logico"        {
+                 return new Symbol(SymServidorA.tboolean, yychar, yyline ,new String(yytext()));}
+"string"        {
+                 return new Symbol(SymServidorA.tstring, yychar, yyline ,new String(yytext()));}
+"true"          {
+                 return new Symbol(SymServidorA.ttrue, yychar, yyline ,new String(yytext()));}
+"false"         {
+                 return new Symbol(SymServidorA.tfalse, yychar, yyline ,new String(yytext()));}
+
+
+
 "+"             {
                  return new Symbol(SymServidorA.tmas, yychar, yyline ,new String(yytext()));}
 "-"             {
@@ -183,18 +237,30 @@ fechacadena = ">" [^<]+ "," [^<]+
                  return new Symbol(SymServidorA.tpor, yychar, yyline ,new String(yytext()));}
 "/"             {
                  return new Symbol(SymServidorA.tdividir, yychar, yyline ,new String(yytext()));}
-"&"             {
-                 return new Symbol(SymServidorA.tconcat, yychar, yyline ,new String(yytext()));}
-*/
+"^"             {
+                 return new Symbol(SymServidorA.tpot, yychar, yyline ,new String(yytext()));}
+"%"             {
+                 return new Symbol(SymServidorA.tmod, yychar, yyline ,new String(yytext()));}
+":"             {
+                 return new Symbol(SymServidorA.tdospuntos, yychar, yyline ,new String(yytext()));}
+
+
 
 /* Operadores Comparadoras */
 
-/**
 "<"             {
                  return new Symbol(SymServidorA.tmenor, yychar, yyline,new String(yytext()));}
 ">"             {
                  return new Symbol(SymServidorA.tmayor, yychar, yyline,new String(yytext()));}
-*/
+"=="            {
+                 return new Symbol(SymServidorA.tigualigual, yychar, yyline,new String(yytext()));}
+"<>"            {
+                 return new Symbol(SymServidorA.tdiferente, yychar, yyline,new String(yytext()));}
+"<="             {
+                 return new Symbol(SymServidorA.tmenorigual, yychar, yyline,new String(yytext()));}
+">="             {
+                 return new Symbol(SymServidorA.tmayorigual, yychar, yyline,new String(yytext()));}
+
 
 
 /* Operadores Comunes */ 
@@ -202,7 +268,7 @@ fechacadena = ">" [^<]+ "," [^<]+
 
 /* Operadores Lógicos */
 
-/**
+
 
 "||"    {
         return new Symbol(SymServidorA.tor, yychar,yyline,new String(yytext())); }
@@ -210,11 +276,20 @@ fechacadena = ">" [^<]+ "," [^<]+
         return new Symbol(SymServidorA.tand, yychar,yyline,new String(yytext())); }
 "!"    {
         return new Symbol(SymServidorA.tno, yychar,yyline,new String(yytext())); }
-*/
+
+
+
+
 
 /* Literales */
 
-     {cadena}        {
+    {entero}        {
+                    return new Symbol(SymServidorA.tentero, yychar,yyline,new String(yytext()));}
+    {decimal}       {
+                    return new Symbol(SymServidorA.tdecimal, yychar,yyline,new String(yytext()));}
+    {caracter}      {
+                    return new Symbol(SymServidorA.tcaracter, yychar,yyline,new String(yytext()));}
+    {cadena}        {
                     return new Symbol(SymServidorA.tcadena, yychar,yyline,new String(yytext().substring(1, yytext().length()-1)));}
     {fechacadena}   {
                     return new Symbol(SymServidorA.tfechacadena, yychar,yyline,new String(yytext()));}

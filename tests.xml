@@ -91,9 +91,26 @@
 </sesion>
 
 
-
-
-
+<sesion peticion="envio"> 
+	<usuario> Usuario@servidorA.com </usuario> 
+	<destinatarios> 
+		<destinatario> nombre del destinatario </destinatario>
+		<destinatario> nombre del destinatario </destinatario> 
+	</destinatarios> 
+	<asunto> asunto </asunto> 
+	<fecha> 12-12-2014,12:12:12 </fecha> 
+	<contenido> xxxxxxxx </contenido> 
+	<archivos> 
+		<archivo tipo="PG" tama="100x100"> 
+			<celda fila="1" columna="1" color="azul" > 
+			</celda> 
+		</archivo>
+		<archivo tipo="PG" tama="100x100"> 
+		<celda fila="1" columna="1" color="azul" > 
+		</celda> 
+		</archivo> 
+	</archivos> 
+</sesion>
 
 
 
