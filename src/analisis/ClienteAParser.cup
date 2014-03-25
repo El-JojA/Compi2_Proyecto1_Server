@@ -28,31 +28,27 @@ action code
 :} 
 
 terminal tssesion, tesesion, tsusuario, teusuario, tsfecha, tefecha, tsnombre, tenombre;
-terminal tsclave, teclave, tsasunto, teasunto, tscontenido, tecontenido, tsdestinatarios;
-terminal tedestinatarios, tsarchivos, tearchivos, tsdestinatario, tedestinatario, tsarchivo;
-terminal tearchivo, tscelda, tecelda, tsformula, teformula, tsusuarios, teusuarios, tslogin;
-terminal telogin, tsestado, teestado, tsrespuesta, terespuesta, tsemisor, teemisor;
-terminal tssolicitudamistad, tesolicitudamistad, tsmensaje, temensaje, ttipo, ttama;
-terminal tid, tpeticion, tde, tfecha, tfila, tcolumna, tcolor, tformula;
-terminal tigual,tcadcampo, tcadena, tfechacadena;
-terminal tscorreos, tecorreos, tscorreo, tecorreo, tsde, tede, tusuario, tsdestino, tedestino;
-terminal tssolicitudes, tesolicitudes,tssolicitud, tesolicitud;
+terminal tscontenido, tecontenido, tsarchivos, tearchivos, tsdestinatario, tedestinatario, tsarchivo;
+terminal tearchivo, tscelda, tecelda, tsformula, teformula, ttipo, ttama;
+terminal tid, tfila, tcolumna, tcolor, tformula;
+terminal tigual,tcadcampo, tcadena, tscorreo, tecorreo, tsde, tede;
 terminal tamperson, toper, tpa, tpc, tbegin, tend, tpyc, tdospuntos, tcoma,tinteger; 
 terminal tfloat, tchar, tboolean, tstring, tmas, tmenos, tpor, tdividir, tpot, tmod;
 terminal tentero, tdecimal, tcaracter, ttrue , tfalse, tif, tla, tlc, telse;
 terminal tor, tand, tno, tmenor, tmayor , tmenorigual, tmayorigual, tigualigual; 
-terminal tdiferente, tfor, tto, tnext, twhile, tiden, treturn;
+terminal tdiferente, tfor, tto, tnext, twhile, tiden, treturn, tsasunto, teasunto;
+terminal teregistro, tsregistro, tserror, teerror, tsenviado, teenviado;
 
 non terminal INICIO, CUERPO, ELEMENTOS,SESION, LISTA_ATR_SESION, ATRIBUTO_SESION;
-non terminal LISTA_CAMPOS, CAMPOS, DESTINATARIOS;
+non terminal LISTA_CAMPOS, CAMPOS;
 non terminal ARCHIVOS, LISTA_ARCHIVOS, ARCHIVO, LISTA_ATR_ARCHIVO, ATRIBUTO_ARCHIVO;
 non terminal LISTA_CELDAS, CELDA, LISTA_ATR_CELDA, ATRIBUTOS_CELDA, CONTENIDO_CELDA;
-non terminal FORMULA, INSTRUCCIONES, USUARIOS, LISTA_USUARIOS, USUARIO, LOGIN;
-non terminal EMISOR, MENSAJE, SOLICITUD_AMISTAD, CORREOS, LISTA_CORREOS, CORREO;
-non terminal SOLICITUDES, LISTA_SOLICITUDES, SOLICITUD, LISTA_VARS, TIPO_VAR;
+non terminal FORMULA, INSTRUCCIONES;
+non terminal CORREO;
+non terminal LISTA_VARS, TIPO_VAR;
 non terminal OPERACION, INSTRUCCION, DECLARA_VAR;
 non terminal ASIGNA_VAR, REF_CELDA , EXPRESION, EXPR_PART, EXPR ,NUM,IF,ELSE;
-non terminal CONDICIONES,CONDICION,OP_COMPARADOR,FOR,WHILE, RETURN;
+non terminal CONDICIONES,CONDICION,OP_COMPARADOR,FOR,WHILE, RETURN, ENVIADO, LISTA_CAMPOS_CORREO;
 
 precedence left tor;
 precedence left tand;
@@ -71,45 +67,34 @@ INICIO          ::= CUERPO {: System.out.println("Fin"); :};
 CUERPO          ::= ELEMENTOS;
 
 ELEMENTOS       ::= SESION
-                    |USUARIOS
-                    |LOGIN
-                    |SOLICITUD_AMISTAD
-                    |MENSAJE
-                    |CORREOS
-                    |SOLICITUDES
-                    |SOLICITUD;
+                    |CORREO;
 
 SESION          ::= tssesion LISTA_ATR_SESION tcadcampo LISTA_CAMPOS tesesion;
 
 LISTA_ATR_SESION::= LISTA_ATR_SESION ATRIBUTO_SESION
                     |ATRIBUTO_SESION;
 
-ATRIBUTO_SESION ::= ttipo tigual tcadena
-                    |tid tigual tcadena
-                    |tpeticion tigual tcadena
-                    |tde tigual tcadena
-                    |tfecha tigual tcadena;
+ATRIBUTO_SESION ::= tid tigual tcadena
+                    |ttipo tigual tcadena;
 
 LISTA_CAMPOS    ::= LISTA_CAMPOS CAMPOS
                     |CAMPOS;
 
 CAMPOS          ::=  tsusuario tcadcampo teusuario
-                    |tsfecha tfechacadena tefecha
-                    |tsnombre tcadcampo tenombre
-                    |tsclave tcadcampo teclave
+                    |tsfecha tcadcampo tefecha
                     |tscontenido tcadcampo tecontenido
                     |tsasunto tcadcampo teasunto
-                    |tsestado tcadcampo teestado
-                    |tsemisor tcadcampo teemisor
                     |tsde tcadcampo tede
-                    |tsdestino tcadcampo tedestino
-                    |tsrespuesta tcadcampo terespuesta
+                    |tsnombre tcadcampo tenombre
                     |tsdestinatario tcadcampo tedestinatario
-                    |DESTINATARIOS
+                    |tsregistro tcadcampo teregistro
+                    |tserror tcadcampo teerror
                     |ARCHIVOS
-                    |EMISOR;
+                    |ENVIADO
+                    |CORREO;
 
-DESTINATARIOS   ::= tsdestinatarios tcadcampo LISTA_CAMPOS tedestinatarios;
+ENVIADO         ::= tsenviado tcadcampo LISTA_CAMPOS teenviado;
+
 
 /**
 LISTA_DESTINATARIOS ::= LISTA_DESTINATARIOS DESTINATARIO
@@ -155,40 +140,10 @@ CONTENIDO_CELDA ::= tcadena
 
 FORMULA         ::= tsformula OPERACION teformula;
 
-EMISOR          ::= tsemisor tcadcampo LISTA_CAMPOS teemisor;
-
-USUARIOS        ::= tsusuarios LISTA_USUARIOS teusuarios;
-
-LISTA_USUARIOS  ::= LISTA_USUARIOS USUARIO
-                    |USUARIO;
-
-CORREOS         ::= tscorreos tusuario tigual tcadena tcadcampo LISTA_CORREOS tecorreos;
-
-LISTA_CORREOS   ::= LISTA_CORREOS CORREO
-                    |CORREO;
-
-CORREO          ::= tscorreo LISTA_CAMPOS tecorreo;
-
-USUARIO         ::= tsusuario tcadcampo LISTA_CAMPOS tmenor teusuario;
-
-LOGIN           ::= tslogin LISTA_CAMPOS telogin;
-
-MENSAJE         ::= tsmensaje LISTA_CAMPOS temensaje;
-
-SOLICITUD_AMISTAD ::= tssolicitudamistad tcadcampo LISTA_CAMPOS tesolicitudamistad;
-
-/**
-CAMPOS_SOLICITUD::= tsrespuesta tcadcampo terespuesta
-                    |tsdestinatario tcadcampo tedestinatario
-                    |EMISOR;
-*/
-
-SOLICITUDES     ::= tssolicitudes tcadcampo LISTA_SOLICITUDES tesolicitudes;
-
-LISTA_SOLICITUDES ::= LISTA_SOLICITUDES SOLICITUD
-                      |SOLICITUD;
-
-SOLICITUD       ::= tssolicitud tcadcampo LISTA_CAMPOS tesolicitud;
+CORREO          ::= tscorreo tcadcampo LISTA_CAMPOS_CORREO tecorreo;
+ 
+LISTA_CAMPOS_CORREO ::= LISTA_CAMPOS
+                        |;
 
 OPERACION       ::= tamperson toper tigual tpa tbegin tla INSTRUCCIONES tlc tend tpc tpyc;
 

@@ -113,12 +113,89 @@
 </sesion>
 
 
+<archivo tipo="XL"> 
+	<celda fila="1" columna="1" tipo="string" color="azul", formula="false"> 
+		"contenido de la celda" 
+	</celda> 
+	<celda fila="1" columna="1" tipo="entero" formula="false"> 
+		"50" 
+	</celda> 
+	<celda fila="1" columna="1" tipo="entero" formula="true"> 
+		<formula> 
+		&Oper=(BEGIN
+			{ RETURN 34+4*(43-45) 
+			}END); 
+		</formula> 
+	</celda> 
+</archivo>
 
 
+<sesion peticion="envio"> 
+	<usuario> Usuario@servidorA.com </usuario> 
+	<destinatarios> 
+		<destinatario> nombre del destinatario </destinatario>
+		<destinatario> nombre del destinatario </destinatario> 
+	</destinatarios> 
+	<asunto> asunto </asunto> 
+	<fecha> 12-12-2014,12:12:12 </fecha> 
+	<contenido> xxxxxxxx </contenido> 
+	<archivos> 
+		<archivo tipo="PG" tama="100x100"> 
+			<celda fila="1" columna="1" color="azul" > 
+			</celda> 
+		</archivo>
+		<archivo tipo="PG" tama="100x100"> 
+		<celda fila="1" columna="1" color="azul" > 
+		</celda> 
+		</archivo>
+		<archivo tipo="XL"> 
+			<celda fila="1" columna="1" tipo="string" color="azul", formula="false"> 
+				"contenido de la celda" 
+			</celda> 
+			<celda fila="1" columna="1" tipo="entero" formula="false"> 
+				"50" 
+			</celda> 
+			<celda fila="1" columna="1" tipo="entero" formula="true"> 
+				<formula> 
+				&Oper=(BEGIN
+					{ RETURN 34+4*(43-45) 
+					}END); 
+				</formula> 
+			</celda> 
+		</archivo>
+
+	</archivos> 
+</sesion>
 
 
+<sesion peticion="envio"> 
+	<usuario> Usuario@servidorA.com </usuario> 
+	<destinatarios> 
+		<destinatario> nombre del destinatario </destinatario>
+		<destinatario> nombre del destinatario </destinatario> 
+	</destinatarios> 
+	<asunto> asunto </asunto> 
+	<fecha> 12-12-2014,12:12:12 </fecha> 
+	<contenido> xxxxxxxx </contenido> 
+	<archivos> 
+		<archivo tipo="XL"> 
+			<celda fila="1" columna="1" tipo="string" color="azul" formula="false"> 
+				"contenido de la celda" 
+			</celda> 
+			<celda fila="1" columna="1" tipo="entero" formula="false"> 
+				"50" 
+			</celda> 
+			<celda fila="1" columna="1" tipo="entero" formula="true"> 
+				<formula> 
+				&Oper=(BEGIN
+					{ RETURN 34+4*(43-45) 
+					}END); 
+				</formula> 
+			</celda> 
+		</archivo>
 
-
+	</archivos> 
+</sesion>
 
 
 
