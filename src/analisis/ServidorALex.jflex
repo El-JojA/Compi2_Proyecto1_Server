@@ -25,9 +25,8 @@ cadcampo    = ">" [^<]*
 /**
 fecha       = {digito}{digito} "-" {digito}{digito} "-" {digito}{digito}{digito}{digito}
 hora        = {digito}{digito} ":" {digito}{digito} ":" {digito}{digito}
-*/
 fechacadena = ">" [^<]+ "," [^<]+
-
+*/
 
 %state A
 
@@ -291,10 +290,8 @@ fechacadena = ">" [^<]+ "," [^<]+
                     return new Symbol(ServidorASym.tcaracter, yychar,yyline,new String(yytext()));}
     {cadena}        {
                     return new Symbol(ServidorASym.tcadena, yychar,yyline,new String(yytext().substring(1, yytext().length()-1)));}
-    {fechacadena}   {
-                    return new Symbol(ServidorASym.tfechacadena, yychar,yyline,new String(yytext()));}
     {cadcampo}      {
-                    return new Symbol(ServidorASym.tcadcampo, yychar,yyline,new String(yytext().substring(1, yytext().length()-1)));}                
+                    return new Symbol(ServidorASym.tcadcampo, yychar,yyline,new String(yytext().substring(1, yytext().length())));}                
 
                
 

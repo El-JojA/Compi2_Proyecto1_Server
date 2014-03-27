@@ -11,22 +11,25 @@ package acciones;
  *
  * @author joja
  */
-public class Campo {
+public class Campo extends Instruccion{
     
     String tipo = "";
     String valor = "";
     
     public Campo(String inTipo, String inValor){
-    
         this.tipo = inTipo;
         this.valor = inValor;
-    
     }
     
     public Campo(){
     
         
         
+    }
+    
+    @Override
+    public void operar() {
+        //super.operar(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

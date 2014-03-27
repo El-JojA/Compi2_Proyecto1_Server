@@ -36,7 +36,7 @@ terminal tearchivo, tscelda, tecelda, tsformula, teformula, tsusuarios, teusuari
 terminal telogin, tsestado, teestado, tsrespuesta, terespuesta, tsemisor, teemisor;
 terminal tssolicitudamistad, tesolicitudamistad, tsmensaje, temensaje, ttipo, ttama;
 terminal tid, tpeticion, tde, tfecha, tfila, tcolumna, tcolor, tformula;
-terminal tigual,tcadcampo, tcadena, tfechacadena;
+terminal tigual,tcadcampo, tcadena;
 terminal tscorreos, tecorreos, tscorreo, tecorreo, tsde, tede, tusuario, tsdestino, tedestino;
 terminal tssolicitudes, tesolicitudes,tssolicitud, tesolicitud;
 terminal tamperson, toper, tpa, tpc, tbegin, tend, tpyc, tdospuntos, tcoma,tinteger; 
@@ -72,19 +72,19 @@ INICIO          ::= CUERPO {: System.out.println("Fin"); :};
 
 CUERPO          ::= ELEMENTOS;
 
-ELEMENTOS       ::= SESION
-                    |USUARIOS
-                    |LOGIN
+ELEMENTOS       ::= SESION:e {: Sesion sesion = (Sesion)e; sesion.operar(); :}
+                    |USUARIOS:e {: Usuarios usuarios = (Usuarios)e; usuarios.operar(); :}
+                    |LOGIN  
                     |SOLICITUD_AMISTAD
                     |MENSAJE
                     |CORREOS
                     |SOLICITUDES
                     |SOLICITUD;
 
-SESION          ::= tssesion LISTA_ATR_SESION:la tcadcampo LISTA_CAMPOS:lc tesesion;
+SESION          ::= tssesion LISTA_ATR_SESION:la tcadcampo LISTA_CAMPOS:lc tesesion {: Sesion ses = new Sesion((ArrayList<Campo>)la, (ArrayList<Campo>)lc); RESULT = ses; :};
 
 LISTA_ATR_SESION::= LISTA_ATR_SESION:l ATRIBUTO_SESION:e {: ArrayList<Campo> lista = (ArrayList<Campo>)l; lista.add((Campo)e); RESULT = lista; :}
-                    |ATRIBUTO_SESION:e {: ArrayList<Campo> lista = new ArrayList(); lista.add((Campo)e); RESULT = lista;  :};
+                    |ATRIBUTO_SESION:e {: ArrayList<Campo> lista = new ArrayList<>(); lista.add((Campo)e); RESULT = lista;  :};
 
 ATRIBUTO_SESION ::= ttipo tigual tcadena:e {: RESULT = new Campo("tipo", (String)e); :}
                     |tid tigual tcadena:e {: RESULT = new Campo("id", (String)e); :}
@@ -92,22 +92,22 @@ ATRIBUTO_SESION ::= ttipo tigual tcadena:e {: RESULT = new Campo("tipo", (String
                     |tde tigual tcadena:e {: RESULT = new Campo("de", (String)e); :}
                     |tfecha tigual tcadena:e {: RESULT = new Campo("fecha", (String)e); :};
 
-LISTA_CAMPOS    ::= LISTA_CAMPOS CAMPOS
-                    |CAMPOS;
+LISTA_CAMPOS    ::= LISTA_CAMPOS:l CAMPOS:e {: ArrayList<Campo> lista = (ArrayList<Campo>)l; lista.add((Campo)e); RESULT = lista; :}
+                    |CAMPOS:e {: ArrayList<Campo> lista = new ArrayList<>(); lista.add((Campo)e); RESULT = lista; :};
 
-CAMPOS          ::=  tsusuario tcadcampo teusuario
-                    |tsfecha tfechacadena tefecha
-                    |tsnombre tcadcampo tenombre
-                    |tsclave tcadcampo teclave
-                    |tscontenido tcadcampo tecontenido
-                    |tsasunto tcadcampo teasunto
-                    |tsestado tcadcampo teestado
-                    |tsemisor tcadcampo teemisor
-                    |tsde tcadcampo tede
-                    |tsdestino tcadcampo tedestino
-                    |tsrespuesta tcadcampo terespuesta
-                    |tsdestinatario tcadcampo tedestinatario
-                    |DESTINATARIOS
+CAMPOS          ::=  tsusuario tcadcampo:e teusuario {: RESULT = new Campo("tipo", (String)e); :}
+                    |tsfecha tcadcampo:e tefecha {: RESULT = new Campo("fecha", (String)e); :}
+                    |tsnombre tcadcampo:e tenombre {: RESULT = new Campo("nombres", (String)e); :}
+                    |tsclave tcadcampo:e teclave {: RESULT = new Campo("clave", (String)e); :}
+                    |tscontenido tcadcampo:e tecontenido {: RESULT = new Campo("contenido", (String)e); :}
+                    |tsasunto tcadcampo:e teasunto {: RESULT = new Campo("asunto", (String)e); :}
+                    |tsestado tcadcampo:e teestado {: RESULT = new Campo("estado", (String)e); :}
+                    |tsemisor tcadcampo:e teemisor {: RESULT = new Campo("emisor", (String)e); :}
+                    |tsde tcadcampo:e tede {: RESULT = new Campo("de", (String)e); :}
+                    |tsdestino tcadcampo:e tedestino {: RESULT = new Campo("destino", (String)e); :}
+                    |tsrespuesta tcadcampo:e terespuesta {: RESULT = new Campo("respuesta", (String)e); :}
+                    |tsdestinatario tcadcampo:e tedestinatario {: RESULT = new Campo("destinatario", (String)e); :}
+                    |DESTINATARIOS 
                     |ARCHIVOS
                     |EMISOR;
 
@@ -159,10 +159,10 @@ FORMULA         ::= tsformula OPERACION teformula;
 
 EMISOR          ::= tsemisor tcadcampo LISTA_CAMPOS teemisor;
 
-USUARIOS        ::= tsusuarios LISTA_USUARIOS teusuarios;
+USUARIOS        ::= tsusuarios LISTA_USUARIOS:lu teusuarios {: Usuarios nuevosUsuarios = new Usuarios((ArrayList<Usuario>)lu); RESULT = nuevosUsuarios; :};
 
-LISTA_USUARIOS  ::= LISTA_USUARIOS USUARIO
-                    |USUARIO;
+LISTA_USUARIOS  ::= LISTA_USUARIOS:lu USUARIO:e {: ArrayList<Usuario> lista = (ArrayList<Usuario>)lu; lista.add((Usuario)e); RESULT = lista; :}
+                    |USUARIO:e {: ArrayList<Usuario> lista = new ArrayList<>(); lista.add((Usuario)e); RESULT = lista; :};
 
 CORREOS         ::= tscorreos tusuario tigual tcadena tcadcampo LISTA_CORREOS tecorreos;
 
@@ -171,7 +171,7 @@ LISTA_CORREOS   ::= LISTA_CORREOS CORREO
 
 CORREO          ::= tscorreo LISTA_CAMPOS tecorreo;
 
-USUARIO         ::= tsusuario tcadcampo LISTA_CAMPOS tmenor teusuario;
+USUARIO         ::= tsusuario tcadcampo LISTA_CAMPOS:lc tmenor teusuario {: ArrayList<Campo> lista = (ArrayList<Campo>)lc; Usuario nuevoUsuario = new Usuario(lista); :};
 
 LOGIN           ::= tslogin LISTA_CAMPOS telogin;
 

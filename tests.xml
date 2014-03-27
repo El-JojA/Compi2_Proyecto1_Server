@@ -1,20 +1,31 @@
 
+<usuarios> 
+	<usuario> 
+		<usuario>admin@servidorA.com</usuario> 
+		<nombres>nombres</nombres> 
+		<fecha>21-03-2014,02:33:45</fecha> 
+		<clave>123</clave> 
+	</usuario>
+	<usuario> 
+		<usuario>Usuario2@servidorA.com</usuario> 
+		<nombres>nombres2</nombres> 
+		<fecha>fecha,hora</fecha> 
+		<clave>clave2</clave>
+	</usuario> 
+</usuarios>
+
 
 <sesion id="correo" tipo="registro"> 
-	<Usuario> Usuario@servidorA.com </usuario>
-	<nombre> nombres </nombres> 
-	<fecha> fecha, hora </fecha> 
-	<clave> clave <clave> 
-</sesion>
-
-<sesion id="correo" tipo="registro"> 
-	<Usuario> Usuario@servidorA.com </usuario>
+	<usuario> Usuario@servidorA.com </usuario>
 	<nombre> nombres </nombre> 
 	<fecha>12-12-2014,12:12:12</fecha> 
 	<clave> clave </clave> 
 </sesion>
 
-
+<sesion id="correo" tipo="inicio"> 
+	<usuario> Usuario@servidorA.com </usuario> 
+	<clave> clave </clave> 
+</sesion>
 
 
 <correos usuario="usuario@servidorA.com"> 
@@ -82,9 +93,6 @@
 	</emisor> 
 </solicitud_amistad>
 
-<sesion id=”correo” peticion=”correo” de=”emisor” fecha=”fecha, hora”> 
-<usuario> Usuario@servidorA.com </usuario> 
-</sesion>
 
 <sesion id="correo" peticion="correo" de="emisor" fecha="12-12-2014,12:12:12"> 
 <usuario> Usuario@servidorA.com </usuario> 

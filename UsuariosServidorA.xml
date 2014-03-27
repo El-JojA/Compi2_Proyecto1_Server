@@ -1,0 +1,8 @@
+<usuarios> 
+	<usuario> 
+		<usuario>admin@servidorA.com</usuario> 
+		<nombres>nombres</nombres> 
+		<fecha>21-03-2014,02:33:45</fecha> 
+		<clave>123</clave> 
+	</usuario>
+</usuarios>
