@@ -1,6 +1,8 @@
 package analisis;
 import java_cup.runtime.*;
 import java.util.*;
+import acciones.*;
+import java.util.ArrayList;
 
 parser code
 
@@ -79,16 +81,16 @@ ELEMENTOS       ::= SESION
                     |SOLICITUDES
                     |SOLICITUD;
 
-SESION          ::= tssesion LISTA_ATR_SESION tcadcampo LISTA_CAMPOS tesesion;
+SESION          ::= tssesion LISTA_ATR_SESION:la tcadcampo LISTA_CAMPOS:lc tesesion;
 
-LISTA_ATR_SESION::= LISTA_ATR_SESION ATRIBUTO_SESION
-                    |ATRIBUTO_SESION;
+LISTA_ATR_SESION::= LISTA_ATR_SESION:l ATRIBUTO_SESION:e {: ArrayList<Campo> lista = (ArrayList<Campo>)l; lista.add((Campo)e); RESULT = lista; :}
+                    |ATRIBUTO_SESION:e {: ArrayList<Campo> lista = new ArrayList(); lista.add((Campo)e); RESULT = lista;  :};
 
-ATRIBUTO_SESION ::= ttipo tigual tcadena
-                    |tid tigual tcadena
-                    |tpeticion tigual tcadena
-                    |tde tigual tcadena
-                    |tfecha tigual tcadena;
+ATRIBUTO_SESION ::= ttipo tigual tcadena:e {: RESULT = new Campo("tipo", (String)e); :}
+                    |tid tigual tcadena:e {: RESULT = new Campo("id", (String)e); :}
+                    |tpeticion tigual tcadena:e {: RESULT = new Campo("peticion", (String)e); :}
+                    |tde tigual tcadena:e {: RESULT = new Campo("de", (String)e); :}
+                    |tfecha tigual tcadena:e {: RESULT = new Campo("fecha", (String)e); :};
 
 LISTA_CAMPOS    ::= LISTA_CAMPOS CAMPOS
                     |CAMPOS;

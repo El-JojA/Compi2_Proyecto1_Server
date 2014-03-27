@@ -7,6 +7,7 @@
 package compi2_poryecto1_server;
 
 import tests.*;
+import GUI.*;
 
 /**
  *
@@ -19,8 +20,11 @@ public class Compi2_Poryecto1_Server {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
         GUItest guiPrueba = new GUItest();
         guiPrueba.setVisible(true);
+        
+        
     }
     
     
