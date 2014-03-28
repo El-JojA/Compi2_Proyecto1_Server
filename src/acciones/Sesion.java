@@ -14,8 +14,8 @@ import java.util.ArrayList;
  */
 public class Sesion extends Instruccion{
 
-    ArrayList<Campo> listaAtributos;
-    ArrayList<Campo> listaCampos;
+    ArrayList<Campo> listaAtributos = new ArrayList<>();
+    ArrayList<Campo> listaCampos = new ArrayList<>();
     
     public Sesion(ArrayList<Campo> inListaAtributos, ArrayList<Campo> inListaCampos){
         this.listaAtributos = inListaAtributos;
@@ -25,15 +25,36 @@ public class Sesion extends Instruccion{
     @Override
     public void operar() {
         //super.operar(); //To change body of generated methods, choose Tools | Templates.
-        if(listaAtributos.size()==2)
-        {
-            Campo atributoId = getPrimerCamopoDe("id");
-            Campo atributoTipo = getPrimerCamopoDe("tipo");
+        Campo atributoId = getPrimerCamopoDe("id",listaAtributos);
+        Campo atributoTipo = getPrimerCamopoDe("tipo",listaAtributos);
+        Campo atributoPeticion = getPrimerCamopoDe("peticion",listaAtributos);
+        Campo atributoDe = getPrimerCamopoDe("de", listaAtributos);
+        Campo atributoFecha = getPrimerCamopoDe("fecha", listaAtributos);
+        
+        Campo campoUsuario = getPrimerCamopoDe("usuario",listaCampos);
+        Campo campoNombres = getPrimerCamopoDe("nombres",listaCampos);
+        Campo campoFecha = getPrimerCamopoDe("fecha",listaCampos);
+        Campo campoClave = getPrimerCamopoDe("clave",listaCampos);
+        
+        
+            
+        if((atributoId!=null)&&(atributoTipo!=null)&&((listaAtributos.size()==2)))
+        {//1-Registro ; 2-Login
             if((atributoId.valor.equalsIgnoreCase("correo"))&&(atributoTipo.valor.equalsIgnoreCase("registro")))
-            {//------Aqui ejecuto si lo que se necesita es hacer un registro.
-                
-                
+            {//Registro
+                if((campoUsuario!=null)&&(campoNombres!=null)&&(campoFecha!=null)&&(campoClave!=null)&&((listaCampos.size()==4)))
+                {//Revisando semantica.
+                    Metodos.addUsuarioMem(campoUsuario.valor, campoNombres.valor, campoFecha.valor, campoClave.valor);
+                }
             }
+            else if((atributoId.valor.equalsIgnoreCase("correo"))&&(atributoTipo.valor.equalsIgnoreCase("inicio")))
+            {//Login
+                if((campoUsuario!=null)&&(campoClave!=null)&&((listaCampos.size()==2)))
+                {//Revisando semantica.
+                    //Metodo de Login
+                }
+            }
+            
         }
     }
     
@@ -43,17 +64,17 @@ public class Sesion extends Instruccion{
     
     }
     
-    public Campo getPrimerCamopoDe(String inNombreCampo){
+    public Campo getPrimerCamopoDe(String inNombreCampo,  ArrayList<Campo> inListaCampos){
         /**
          * Va a devolver el primer campo que encuentre en la lista de atributos,
          * esto quiere decir que si hay varios con el mismo nombre solo va a tomar
          * en cuenta el primero.
          */
-        for(int i =0; i < this.listaAtributos.size(); i++)
+        for(int i =0; i < inListaCampos.size(); i++)
         {
-            if(this.listaAtributos.get(i).tipo.equalsIgnoreCase(inNombreCampo))
+            if(inListaCampos.get(i).tipo.equalsIgnoreCase(inNombreCampo))
             {
-                return this.listaAtributos.get(i);
+                return inListaCampos.get(i);
             }
         }
         return null;

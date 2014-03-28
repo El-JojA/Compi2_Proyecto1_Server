@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public class Usuarios extends Instruccion {
     
-    ArrayList<Usuario> listaUsuarios;
+    ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     
     public Usuarios(ArrayList<Usuario> inListaUsuarios){
         this.listaUsuarios = inListaUsuarios;
@@ -29,7 +29,6 @@ public class Usuarios extends Instruccion {
         String clave;
         ArrayList<UsuarioMem> listaUsuMem = new ArrayList<>();
        
-        
        for(int i = 0; i < this.listaUsuarios.size(); i++)
         {
             if(this.listaUsuarios.get(i).listaCampos.size()==4)
@@ -39,13 +38,27 @@ public class Usuarios extends Instruccion {
                 Campo campoFecha = getPrimerCamopoDe("fecha", this.listaUsuarios.get(i).listaCampos);
                 Campo campoClave = getPrimerCamopoDe("clave", this.listaUsuarios.get(i).listaCampos);
                 
-                usuario = campoUsuario.valor;
-                nombres = campoNombres.valor;
-                fecha = campoFecha.valor;
-                clave = campoClave.valor;
+                if(campoUsuario==null || campoNombres ==null || campoFecha == null || campoClave ==null)
+                {
+                    Random rand = new Random();
+                    int  x = rand.nextInt(30) + 1;
+                    int  y = rand.nextInt(20) + 1;
+                    Metodos.addError("semantico", y, x, "Se encontró un error en los campos que contiene \"<usuario>\"");
+                }
+                else
+                {
+                    usuario = campoUsuario.valor;
+                    nombres = campoNombres.valor;
+                    fecha = campoFecha.valor;
+                    clave = campoClave.valor;
+                    
+                    
+                    UsuarioMem usu = new UsuarioMem(usuario, nombres, fecha, clave);
+                    listaUsuMem.add(usu);
+                }
                 
-                UsuarioMem usu = new UsuarioMem(usuario, nombres, fecha, clave);
-                listaUsuMem.add(usu);
+                
+                
              }
             else
             {   

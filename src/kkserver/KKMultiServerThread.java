@@ -6,6 +6,7 @@
 
 package kkserver;
 
+import acciones.Metodos;
 import analisis.ServidorALex;
 import analisis.ServidorAParser;
 import java.net.*;
@@ -33,6 +34,8 @@ public class KKMultiServerThread extends Thread {
             String mensajeActual="";
             KnockKnockProtocol kkp = new KnockKnockProtocol();
             
+            
+            
             while ((inputLine = in.readLine()) != null) {
                 //outputLine = kkp.processInput(inputLine);
                 if(inputLine.length()>2)
@@ -49,10 +52,13 @@ public class KKMultiServerThread extends Thread {
                         }catch (Exception ex){System.out.println(ex.toString());}
                         
                         //Aquí abajo mandamos la respuesa.
-                        out.println(outputLine);
+                        /**
+                         * out.println(outputLine);
+                         */
+                        
                     }
                     else
-                    {
+                    {   //Aqui se mete si el archivo no ha terminado.
                         mensajeActual = mensajeActual + "\n" + inputLine;
                     }
                 }

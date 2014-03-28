@@ -6,6 +6,7 @@
 
 package kkserver;
 
+import acciones.Metodos;
 import java.net.*;
 import java.io.*;
  
@@ -20,6 +21,9 @@ public class KKMultiServer {
     */
         int portNumber = 8000;
         boolean listening = true;
+        
+        //Load a los usuarios
+        Metodos.initListaUsuarios();
          
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
             while (listening) {

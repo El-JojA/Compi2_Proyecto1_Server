@@ -1,18 +1,5 @@
 
-<usuarios> 
-	<usuario> 
-		<usuario>admin@servidorA.com</usuario> 
-		<nombres>nombres</nombres> 
-		<fecha>21-03-2014,02:33:45</fecha> 
-		<clave>123</clave> 
-	</usuario>
-	<usuario> 
-		<usuario>Usuario2@servidorA.com</usuario> 
-		<nombres>nombres2</nombres> 
-		<fecha>fecha,hora</fecha> 
-		<clave>clave2</clave>
-	</usuario> 
-</usuarios>
+
 
 
 <sesion id="correo" tipo="registro"> 

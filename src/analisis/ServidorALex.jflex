@@ -46,9 +46,9 @@ fechacadena = ">" [^<]+ "," [^<]+
                  return new Symbol(ServidorASym.tsfecha, yychar, yyline ,new String(yytext()));}
 "</fecha>"       {
                  return new Symbol(ServidorASym.tefecha, yychar, yyline ,new String(yytext()));}
-"<nombre"       {
+"<nombres"       {
                  return new Symbol(ServidorASym.tsnombre, yychar, yyline ,new String(yytext()));}
-"</nombre>"      {
+"</nombres>"      {
                  return new Symbol(ServidorASym.tenombre, yychar, yyline ,new String(yytext()));}
 "<clave"        {
                  return new Symbol(ServidorASym.tsclave, yychar, yyline ,new String(yytext()));}

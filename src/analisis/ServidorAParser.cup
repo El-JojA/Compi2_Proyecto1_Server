@@ -95,7 +95,7 @@ ATRIBUTO_SESION ::= ttipo tigual tcadena:e {: RESULT = new Campo("tipo", (String
 LISTA_CAMPOS    ::= LISTA_CAMPOS:l CAMPOS:e {: ArrayList<Campo> lista = (ArrayList<Campo>)l; lista.add((Campo)e); RESULT = lista; :}
                     |CAMPOS:e {: ArrayList<Campo> lista = new ArrayList<>(); lista.add((Campo)e); RESULT = lista; :};
 
-CAMPOS          ::=  tsusuario tcadcampo:e teusuario {: RESULT = new Campo("tipo", (String)e); :}
+CAMPOS          ::=  tsusuario tcadcampo:e teusuario {: RESULT = new Campo("usuario", (String)e); :}
                     |tsfecha tcadcampo:e tefecha {: RESULT = new Campo("fecha", (String)e); :}
                     |tsnombre tcadcampo:e tenombre {: RESULT = new Campo("nombres", (String)e); :}
                     |tsclave tcadcampo:e teclave {: RESULT = new Campo("clave", (String)e); :}
@@ -171,7 +171,7 @@ LISTA_CORREOS   ::= LISTA_CORREOS CORREO
 
 CORREO          ::= tscorreo LISTA_CAMPOS tecorreo;
 
-USUARIO         ::= tsusuario tcadcampo LISTA_CAMPOS:lc tmenor teusuario {: ArrayList<Campo> lista = (ArrayList<Campo>)lc; Usuario nuevoUsuario = new Usuario(lista); :};
+USUARIO         ::= tsusuario tcadcampo LISTA_CAMPOS:lc teusuario {: ArrayList<Campo> lista = (ArrayList<Campo>)lc; Usuario nuevoUsuario = new Usuario(lista); RESULT = nuevoUsuario; :};
 
 LOGIN           ::= tslogin LISTA_CAMPOS telogin;
 

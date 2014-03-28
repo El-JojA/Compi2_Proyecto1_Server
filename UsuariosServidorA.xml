@@ -1,8 +1,14 @@
-<usuarios> 
-	<usuario> 
-		<usuario>admin@servidorA.com</usuario> 
-		<nombres>nombres</nombres> 
-		<fecha>21-03-2014,02:33:45</fecha> 
-		<clave>123</clave> 
-	</usuario>
+<usuarios>
+<usuario>
+<usuario>admin@servidorA.com</usuario>
+<nombres>joja cardona</nombres>
+<fecha>21-03-2014,10:48:36</fecha>
+<clave>123</clave>
+</usuario>
+<usuario>
+<usuario>joja@servidorA.com</usuario>
+<nombres>joja cardona</nombres>
+<fecha>27-03-2014,10:52:25</fecha>
+<clave>123</clave>
+</usuario>
 </usuarios>

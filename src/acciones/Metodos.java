@@ -6,8 +6,11 @@ package acciones;
 
 import analisis.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
@@ -27,6 +30,8 @@ public class Metodos {
     
     public static ArrayList<UsuarioMem> listaUsuariosMem = new ArrayList<>();
     public static String pathUsuariosXML ="C:\\Users\\joja\\Documents\\NetBeansProjects\\Compi2_Poryecto1_Server\\UsuariosServidorA.xml";
+    
+    public static String mensajeRespuesta="";
     
     public static void Metodos(){
         
@@ -48,6 +53,30 @@ public class Metodos {
         return resultado;
     }
     
+    public static void escribirArchivo(String inPath, String inTexto){
+    
+        try 
+        {
+            String content = inTexto;
+            File file = new File(inPath);
+
+            // if file doesnt exists, then create it
+            if (!file.exists()) 
+            {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+
+            System.out.println("Done");
+ 
+        } catch (IOException e) {e.printStackTrace();}
+    
+    }
+    
     public static void clearAll(){
         htmlErrorLex="";
         htmlErrorSin="";
@@ -57,10 +86,63 @@ public class Metodos {
     }
     
     public static void initListaUsuarios() throws IOException{
-    
         String usuarios = leerArchivo(pathUsuariosXML); 
         compilarServidor(usuarios);
-         
+    }
+    
+    public static int existeUsuarioMem(String inUsuario){
+        for(int i = 0; i< listaUsuariosMem.size(); i++)
+        {
+            if(listaUsuariosMem.get(i).usuario.equalsIgnoreCase(inUsuario))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public static void escribirUsuariosXML(){
+        
+        String usuariosXML="";
+        for(int i =0; i<listaUsuariosMem.size(); i++)
+        {
+            usuariosXML = usuariosXML + "<usuario>" + "\n" ;
+            usuariosXML = usuariosXML + "<usuario>"+listaUsuariosMem.get(i).usuario+"</usuario>"  + "\n";
+            usuariosXML = usuariosXML + "<nombres>"+listaUsuariosMem.get(i).nombres+"</nombres>"  + "\n";
+            usuariosXML = usuariosXML + "<fecha>"+listaUsuariosMem.get(i).fecha+"</fecha>"  + "\n";
+            usuariosXML = usuariosXML + "<clave>"+listaUsuariosMem.get(i).clave+"</clave>"  + "\n";
+            usuariosXML = usuariosXML + "</usuario>" + "\n";
+        }
+        String usuariosXMLFinal ="<usuarios>" + "\n"
+                                + usuariosXML
+                                + "</usuarios>" + "\n";
+        escribirArchivo(pathUsuariosXML, usuariosXMLFinal);
+        
+    }
+    
+    public static void addUsuarioMem(String inUsuario, String inNombres, String inFecha, String inClave){
+    
+        if(existeUsuarioMem(inUsuario)==-1)
+        {//El usuario no existe
+            listaUsuariosMem.add(new UsuarioMem(inUsuario, inNombres, inFecha, inClave));
+            
+            String mensajeError;
+            mensajeError =  "<sesion id=\"correo\"> \n" +
+                            "<registro> Usuario registrado </registro> \n" +
+                            "</sesion>";
+            mensajeRespuesta = mensajeError;
+            escribirUsuariosXML();
+        }
+        else
+        {//El usuairo existe.
+            String mensajeError;
+            mensajeError =   "<sesion id=\"correo\"> \n" +
+                        "<Error> Usuario ya existe. </Error> \n" +
+                        "</sesion>";
+            mensajeRespuesta = mensajeError;
+            
+        }
+        
     }
     
     public static void compilarServidor(String inArchivo){
